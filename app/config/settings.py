@@ -13,4 +13,7 @@ class Settings:
         "deepseek-r1-distill-llama-70b"
     ]
 
+    MODEL_TEMPERATURE = 0
+    TOP_K = 10
+
 settings=Settings()
