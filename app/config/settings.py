@@ -16,4 +16,7 @@ class Settings:
     MODEL_TEMPERATURE = 0
     TOP_K = 10
 
+    # Tavily Tool Configs
+    MAX_RESULTS = 3
+
 settings=Settings()
