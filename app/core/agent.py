@@ -1,8 +1,8 @@
 from langgraph.prebuilt import create_react_agent
-from config.llm import get_llm
-from config.settings import settings
-from core.prompt import SYSTEM_PROMPT
-from core.tools import get_tavily_search
+from app.config.llm import get_llm
+from app.config.settings import settings
+from app.core.prompt import SYSTEM_PROMPT
+from app.core.tools import get_tavily_search
 from langchain_core.messages.ai import AIMessage
 
 def get_agent(llm_id=settings.ALLOWED_MODEL_NAMES[0], web_search=False):
