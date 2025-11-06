@@ -1,1 +1,1 @@
-SYSTEM_PROMPT = "PLACEHOLDER"
+SYSTEM_PROMPT = "You are a helpful assistant"
