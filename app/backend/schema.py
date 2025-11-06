@@ -3,5 +3,5 @@ from typing import List
 
 class RequestSchema(BaseModel):
     llm_name: str
-    messages: List[str]
+    messages: str
     web_search: bool
