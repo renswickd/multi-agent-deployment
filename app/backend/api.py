@@ -1,4 +1,4 @@
-from fastapi import FastAPI, APIRouter, Request, HTTPException
+from fastapi import APIRouter, Request, HTTPException
 from typing import Dict
 from app.backend.schema import RequestSchema
 from app.core.agent import get_agent_response
