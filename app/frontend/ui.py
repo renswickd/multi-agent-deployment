@@ -21,18 +21,25 @@ user_query = st.text_input("Ask a question:")
 CHAT_URL = settings.chat_url
 
 if st.button("Submit") and user_query.strip():
+    logger.info(
+        "Received chat request",
+        extra={"llm_name": selected_model,"web_search": web_search}
+    )
     payload = {
             "llm_name": selected_model,
             "messages": [user_query],
             "web_search": web_search
         }
+    logger.info(f"Payload generated: {payload}")
     try:
         response = requests.post(CHAT_URL, json= payload)
 
         if response.status_code == 200:
             st.write(response.json())
+            logger.info(f"Response Successful: {response.json()}")
         else:
             st.write(f"Error: {response.status_code}")
+            logger.info(f"Response Failed: {response.status_code}")
 
     except Exception as e:
         logger.error(f"Error during agent invocation: {e}")
