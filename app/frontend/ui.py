@@ -12,3 +12,28 @@ st.set_page_config(
 )
 
 st.title("Multi Agents Deployment - Demo App")
+
+selected_model = st.selectbox("Select Model", settings.ALLOWED_MODEL_NAMES)
+web_search = st.checkbox("🌐 Search")
+
+user_query = st.text_input("Ask a question:")
+
+CHAT_URL = settings.chat_url
+
+if st.button("Submit") and user_query.strip():
+    payload = {
+            "llm_name": selected_model,
+            "messages": [user_query],
+            "web_search": web_search
+        }
+    try:
+        response = requests.post(CHAT_URL, json= payload)
+
+        if response.status_code == 200:
+            st.write(response.json())
+        else:
+            st.write(f"Error: {response.status_code}")
+
+    except Exception as e:
+        logger.error(f"Error during agent invocation: {e}")
+        st.write(f"Error: {e}")

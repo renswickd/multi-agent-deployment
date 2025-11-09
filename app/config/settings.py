@@ -19,4 +19,12 @@ class Settings:
     # Tavily Tool Configs
     MAX_RESULTS = 3
 
+    # backend
+    backend_base_url = "http://127.0.0.1:8000"
+    chat_url = f"{backend_base_url}/api/chat"
+
+    #frontend
+    frontend_base_url = "http://127.0.0.1:8501"
+
+
 settings=Settings()
