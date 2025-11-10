@@ -1,8 +1,10 @@
 import requests
 import streamlit as st
-from app.config.params import config
+from app.config.params import load_yaml_config  # Import the function directly
 from app.common.logger import get_logger
 from app.common.custom_exception import CustomException
+
+config = load_yaml_config()  # Call the function to get the config
 
 BACKEND_HOST = config["urls_and_ports"]["backend_host"]
 BACKEND_PORT = config["urls_and_ports"]["backend_port"]

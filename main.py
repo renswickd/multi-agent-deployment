@@ -1,3 +1,11 @@
+import sys
+from pathlib import Path
+import os
+
+# Add project root to Python path
+project_root = Path(__file__).parent
+sys.path.append(str(project_root))
+
 import uvicorn
 import threading
 import subprocess
@@ -13,10 +21,15 @@ app = FastAPI(title="AI Agent App Deployment Demo", version="0.1")
 app.include_router(router, prefix="/api")
 
 def run_backend():
-    uvicorn.run("main:app", host=config["urls_and_ports"], port=config["backend_port"], reload=False)
+    uvicorn.run("main:app", host=config["urls_and_ports"]["backend_host"], port=config["urls_and_ports"]["backend_port"], reload=False)
 
 def run_frontend():
-    subprocess.run(["streamlit", "run", "app/frontend/ui.py"])
+    env = os.environ.copy()
+    env["PYTHONPATH"] = str(project_root)
+    subprocess.run(
+        ["streamlit", "run", "app/frontend/ui.py"],
+        env=env
+    )
 
 def main():
     # Create threads for frontend and backend
