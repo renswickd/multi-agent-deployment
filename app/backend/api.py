@@ -2,9 +2,8 @@ from fastapi import APIRouter, Request, HTTPException
 from typing import Dict
 from app.backend.schema import RequestSchema
 from app.core.agent import get_agent_response
-from app.config.settings import settings
+from app.config.params import config
 from app.common.logger import get_logger
-# from app.common.custom_exception import CustomException
 
 logger = get_logger(__name__)
 
@@ -21,12 +20,12 @@ async def chat_endpoint(request_data: RequestSchema, http_request: Request):
         }
     )
 
-    if request_data.llm_name not in settings.ALLOWED_MODEL_NAMES:
+    if request_data.llm_name not in config["model_settings"]["allowed_model_names"]:
         logger.warning(
             "Invalid model name provided",
             extra={
                 "requested_model": request_data.llm_name,
-                "allowed_models": settings.ALLOWED_MODEL_NAMES
+                "allowed_models": config["model_settings"]["allowed_model_names"]
             }
         )
         raise HTTPException(
