@@ -1,9 +1,9 @@
-from app.config.settings import settings
+from app.config.params import config
 from langchain_groq import ChatGroq
 
-def get_llm(model_name=settings.ALLOWED_MODEL_NAMES[0]):
+def get_llm(model_name=config["model_settings"]["allowed_model_names"][0]):
     return ChatGroq(
-        temperature=settings.MODEL_TEMPERATURE,
+        temperature=config["model_settings"]["model_temperature"],
         model=model_name,
-        api_key=settings.GROQ_API_KEY,
+        api_key=config["api_keys"]["groq_api_key"],
     )

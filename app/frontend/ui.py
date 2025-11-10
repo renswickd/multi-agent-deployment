@@ -1,8 +1,17 @@
 import requests
 import streamlit as st
-from app.config.settings import settings
+# from app.config.settings import settings
+from app.config.params import config
 from app.common.logger import get_logger
 from app.common.custom_exception import CustomException
+
+config = load_yaml_config()
+
+BACKEND_HOST = config["urls_and_ports"]["backend_host"]
+BACKEND_PORT = config["urls_and_ports"]["backend_port"]
+FRONTEND_HOST = config["urls_and_ports"]["frontend_host"]
+FRONTEND_PORT = config["urls_and_ports"]["frontend_port"]
+BACKEND_BASE_URL = f"http://{BACKEND_HOST}:{BACKEND_PORT}"
 
 logger = get_logger(__name__)
 
@@ -13,12 +22,14 @@ st.set_page_config(
 
 st.title("Multi Agents Deployment - Demo App")
 
-selected_model = st.selectbox("Select Model", settings.ALLOWED_MODEL_NAMES)
+selected_model = st.selectbox("Select Model", config["model_settings"]["allowed_model_names"])
 web_search = st.checkbox("🌐 Search")
 
 user_query = st.text_input("Ask a question:")
 
-CHAT_URL = settings.chat_url
+
+CHAT_URL = f"{BACKEND_BASE_URL}/api/chat"
+print("12345",CHAT_URL)
 
 if st.button("Submit") and user_query.strip():
     logger.info(
@@ -44,3 +55,4 @@ if st.button("Submit") and user_query.strip():
     except Exception as e:
         logger.error(f"Error during agent invocation: {e}")
         st.write(f"Error: {e}")
+        raise CustomException(f"Error during agent invocation: {e}")
