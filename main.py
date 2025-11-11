@@ -38,8 +38,11 @@ def main():
 
     try:
         backend_thread.start()
-        frontend_thread.start()
+        print("backend started")
 
+        frontend_thread.start()
+        print("frontend started")
+        
         backend_thread.join()
         frontend_thread.join()
 
