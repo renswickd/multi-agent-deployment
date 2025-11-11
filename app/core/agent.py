@@ -1,13 +1,14 @@
 import asyncio
 from langgraph.prebuilt import create_react_agent
 from app.config.llm import get_llm
-from app.config.settings import settings
+# from app.config.settings import settings
+from app.config.params import config
 from app.core.prompt import SYSTEM_PROMPT
 from app.core.tools import get_tavily_search
 from app.common.custom_exception import CustomException
 from langchain_core.messages.ai import AIMessage
 
-def get_agent(llm_id=settings.ALLOWED_MODEL_NAMES[0], web_search=False):
+def get_agent(llm_id=config["model_settings"]["allowed_model_names"][0], web_search=False):
 
     tools = [get_tavily_search()] if web_search else []
 
@@ -17,7 +18,7 @@ def get_agent(llm_id=settings.ALLOWED_MODEL_NAMES[0], web_search=False):
         prompt=SYSTEM_PROMPT,
     )
 
-async def get_agent_response(query, llm_id=settings.ALLOWED_MODEL_NAMES[0], web_search=False):
+async def get_agent_response(query, llm_id=config["model_settings"]["allowed_model_names"][0], web_search=False):
     agent = get_agent(llm_id=llm_id, web_search=web_search)
     state = {"messages": query}
 
